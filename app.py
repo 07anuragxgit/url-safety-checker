@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from utils import analyze_url
 
 app = FastAPI()
 
-# CORS FIX
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,9 +14,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 🔥 SERVE FRONTEND
 @app.get("/")
-def home():
-    return {"message": "URL Safety Checker Running"}
+def serve_frontend():
+    return FileResponse("index.html")
+
 
 @app.get("/check")
 def check_url(url: str):
